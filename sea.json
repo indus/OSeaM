@@ -1,0 +1,109 @@
+﻿{
+  "pillar_r": {
+    "width": 30,
+    "height": 42,
+    "x": 0,
+    "y": 0,
+    "pixelRatio": 1
+  },
+  "pillar_g": {
+    "width": 30,
+    "height": 42,
+    "x": 30,
+    "y": 0,
+    "pixelRatio": 1
+  },
+  "pillar_y": {
+    "width": 30,
+    "height": 42,
+    "x": 60,
+    "y": 0,
+    "pixelRatio": 1
+  },
+  "top_cone_r": {
+    "width": 12,
+    "height": 18,
+    "x": 94,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_can_r": {
+    "width": 12,
+    "height": 18,
+    "x": 106,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_sphere_r": {
+    "width": 12,
+    "height": 18,
+    "x": 118,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_cone_g": {
+    "width": 12,
+    "height": 18,
+    "x": 130,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_can_g": {
+    "width": 12,
+    "height": 18,
+    "x": 142,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_sphere_g": {
+    "width": 12,
+    "height": 18,
+    "x": 154,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_cone_y": {
+    "width": 12,
+    "height": 18,
+    "x": 166,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_can_y": {
+    "width": 12,
+    "height": 18,
+    "x": 178,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "top_sphere_y": {
+    "width": 12,
+    "height": 18,
+    "x": 190,
+    "y": 2,
+    "pixelRatio": 1
+  },
+  "light_r": {
+    "width": 12,
+    "height": 42,
+    "x": 204,
+    "y": 0,
+    "pixelRatio": 1
+  },
+  "light_g": {
+    "width": 12,
+    "height": 42,
+    "x": 216,
+    "y": 0,
+    "pixelRatio": 1
+  },
+  "light_y": {
+    "width": 12,
+    "height": 42,
+    "x": 228,
+    "y": 0,
+    "pixelRatio": 1
+  }
+
+
+}

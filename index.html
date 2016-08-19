@@ -1,0 +1,182 @@
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.22.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.22.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+        var mapStyle = {
+            "version": 8,
+            "name": "Dark",
+            "sprite": "sea",
+            "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+            "sources": {
+                "mapbox": {
+                    "type": "vector",
+                    "url": "mapbox://mapbox.mapbox-streets-v6"
+                },
+                "sea_demo": {
+                    "type": "geojson",
+                    "data": {
+                        "type": "FeatureCollection",
+                        "features":
+                            ['r', 'g', 'y'].reduce(function (re, c, i) {
+                                for (var j = 0; j < 5; j++)
+                                    re.push({
+                                        "type": "Feature",
+                                        "geometry": {
+                                            "type": "Point",
+                                            "coordinates": [11.67 + (i * 0.05), 54.33 + (j * 0.01)]
+                                        },
+                                        "properties": {
+                                            "title": (i == 2 ? "Sperr-G. " : "WW ") + (j + 1),
+                                            "icon-before": (j) % 3 ? null : "light_" + c,
+                                            "icon": "pillar_" + c,
+                                            "icon-after": j < 3 ? "top_" + ['can', 'cone', 'sphere'][j] + "_" + c : null
+                                        }
+                                    });
+                                return re;
+                            }, [])
+                    }
+                }
+            },
+            "layers": [
+                {
+                    "id": "background",
+                    "type": "background",
+                    "paint": { "background-color": "#111" }
+                },
+                {
+                    "id": "water",
+                    "source": "mapbox",
+                    "source-layer": "water",
+                    "type": "fill",
+                    "paint": { "fill-color": "#2c2c2c" }
+                },
+                {
+                    "id": "boundaries",
+                    "source": "mapbox",
+                    "source-layer": "admin",
+                    "type": "line",
+                    "paint": { "line-color": "#797979", "line-dasharray": [2, 2, 6, 2] },
+                    "filter": ["all", ["==", "maritime", 0]]
+                },
+                {
+                    "id": "cities",
+                    "source": "mapbox",
+                    "source-layer": "place_label",
+                    "type": "symbol",
+                    "layout": {
+                        "text-field": "{name_en}",
+                        "text-font": ["DIN Offc Pro Bold", "Arial Unicode MS Bold"],
+                        "text-size": { "stops": [[4, 9], [6, 12]] }
+                    },
+                    "paint": {
+                        "text-color": "#969696",
+                        "text-halo-width": 2,
+                        "text-halo-color": "rgba(0, 0, 0, 0.85)"
+                    }
+                },
+                {
+                    "id": "states",
+                    "source": "mapbox",
+                    "source-layer": "state_label",
+                    "type": "symbol",
+                    "layout": {
+                        "text-transform": "uppercase",
+                        "text-field": "{name_en}",
+                        "text-font": ["DIN Offc Pro Bold", "Arial Unicode MS Bold"],
+                        "text-letter-spacing": 0.15,
+                        "text-max-width": 7,
+                        "text-size": { "stops": [[4, 10], [6, 14]] }
+                    },
+                    "filter": [">=", "area", 80000],
+                    "paint": {
+                        "text-color": "#969696",
+                        "text-halo-width": 2,
+                        "text-halo-color": "rgba(0, 0, 0, 0.85)"
+                    }
+                },
+                //SEA
+                {
+                    "id": "sea_symbol_before",
+                    "source": "sea_demo",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "{icon-before}",
+                        "icon-offset": [0, -21],
+                        "icon-allow-overlap": true,
+                        "icon-rotate": 120
+                    }
+                },
+                {
+                    "id": "sea_symbol",
+                    "source": "sea_demo",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "{icon}",
+                        "icon-allow-overlap": true,
+                        "icon-offset": [0, -15.69],
+                        "text-transform": "uppercase",
+                        "text-field": "{title}",
+                        "text-allow-overlap": true,
+                        "text-font": ["DIN Offc Pro Bold", "Arial Unicode MS Bold"],
+                        "text-letter-spacing": 0.15,
+                        "text-max-width": 7,
+                        "text-anchor": "top-left",
+                        "text-size": 10
+                    },
+                    "paint": {
+                        "text-color": "#969696",
+                        "text-halo-width": 2,
+                        "text-translate-anchor": "viewport",
+                        "text-translate": [15, -20],
+                        "text-halo-color": "rgba(0, 0, 0, 0.85)"
+                    }
+                },
+                {
+                    "id": "sea_symbol_after",
+                    "source": "sea_demo",
+                    "type": "symbol",
+                    "layout": {
+                        "icon-image": "{icon-after}",
+                        "icon-offset": [2, -46],
+                        "icon-allow-overlap": true,
+                        "icon-rotate": 18
+                    }
+                }
+            ]
+        };
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            minZoom: 4,
+            zoom: 12,
+            center: [11.717, 54.350],
+            style: mapStyle,
+            hash: false
+        });
+
+    </script>
+
+</body>
+</html>
