@@ -42,7 +42,7 @@
         [ "==", "maritime", 0 ]
       ]
     },
-    {
+    /*{
       "id": "refe",
       "source": "oseam",
       "source-layer": "buoy_lateral",
@@ -51,7 +51,7 @@
         "circle-color": "magenta",
         "circle-radius": 2
       }
-    },
+    },*/
 
     {
       "id": "buoy_lateral_pillar",
