@@ -2,12 +2,7 @@
   "version": 8,
   "name": "oseam",
   "sprite": "sprite",
-  "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
   "sources": {
-    "mapbox": {
-      "type": "vector",
-      "url": "mapbox://mapbox.mapbox-streets-v6"
-    },
     "oseam": {
       "type": "vector",
       "tiles": [ "http://vectortiles.195.37.132.70.xip.io/data/oseam/{z}/{x}/{y}.pbf" ],
@@ -20,27 +15,6 @@
       "id": "background",
       "type": "background",
       "paint": { "background-color": "#B5D0D0" }
-    },
-    {
-      "id": "water",
-      "source": "mapbox",
-      "source-layer": "water",
-      "type": "fill",
-      "paint": { "fill-color": "#B5D0D0" }
-    },
-    {
-      "id": "boundaries",
-      "source": "mapbox",
-      "source-layer": "admin",
-      "type": "line",
-      "paint": {
-        "line-color": "#797979",
-        "line-dasharray": [ 2, 2, 6, 2 ]
-      },
-      "filter": [
-        "all",
-        [ "==", "maritime", 0 ]
-      ]
     },
     {
       "id": "buoy_lateral_pillar",
