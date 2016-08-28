@@ -105,11 +105,9 @@
             return f;
         },f);
 
-        var mapStyle = {"version":8,"name":"Dark","sprite":"sea","glyphs":"mapbox://fonts/mapbox/{fontstack}/{range}.pbf","sources":{"mapbox":{"type":"vector","url":"mapbox://mapbox.mapbox-streets-v6"},
-            "sea_demo":{"type":"geojson","data":{"type":"FeatureCollection","features":f}}} ,"layers":[
+        var mapStyle = {"version":8,"name":"Dark","sprite":"sea","sources":
+            {"sea_demo":{"type":"geojson","data":{"type":"FeatureCollection","features":f}}} ,"layers":[
             {"id":"background","type":"background","paint":{"background-color":"#B5D0D0"}},
-            {"id":"water","source":"mapbox","source-layer":"water","type":"fill","paint":{"fill-color":"#B5D0D0"}},
-            {"id":"boundaries","source":"mapbox","source-layer":"admin","type":"line","paint":{"line-color":"#797979","line-dasharray":[2,2,6,2]},"filter":["all",["==","maritime",0]]},
             //{"id":"ref","source":"sea_demo","type":"circle","paint":{"circle-color":"magenta","circle-radius":2}},
             {"id":"sea_symbol_light","source":"sea_demo","type":"symbol","layout":{"icon-image":"{light}","icon-offset":[0,-33],"icon-allow-overlap":true,"icon-rotate":110}},
             {"id":"sea_symbol_pillarpillar2_top","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top}","icon-offset":[0,-48],"icon-allow-overlap":true,"icon-rotate":18},"filter":["any",["==","type","pillar"],["==","type","pillar2"]]},
@@ -136,7 +134,6 @@
             ]};
 
 
-        mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
         var map = new mapboxgl.Map({
             container: 'map',
             minZoom: 4,
