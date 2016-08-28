@@ -1,7 +1,7 @@
 ﻿{
   "version": 8,
   "name": "oseam",
-  "sprite": "oseam/sprite",
+  "sprite": "sprite",
   "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
   "sources": {
     "mapbox": {
