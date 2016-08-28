@@ -23,6 +23,146 @@
 
     <div id='map'></div>
     <script>
+
+        var f = [],
+        tid = ["circle", "square", "tri_up", "tri_down", "cross", "cross2"],
+        lid = ["white", "red", "green", "blue", "yellow", "orange", "violet", "magenta"];
+
+
+        ["pillar","pillar2","tower","beacon","can", "cone", "g3674", "super_buoy", "barrel", "float"]
+        .reduce(function(f, id,y){
+            f.push({
+                "type": "Feature",
+                "geometry": {"type": "Point","coordinates": [11.48, 54.3 - (y * .01)]},
+                "properties": {
+                    "type": id,
+                    "top2": "top_" + ["circle_circle", "tri_up_tri_up", "tri_down_tri_down", "tri_down_tri_up", "tri_up_tri_down"][y%5]  + '_b',
+                        "light":("light_" +lid[y%5])
+                }
+            });
+
+            return f;
+        },f);
+        ["pillar","pillar2","tower","beacon"]
+        .reduce(function(f, id,y){
+            ['','_w', '_r', '_g', '_y', '_wr', '_yb', '_by', '_yby', '_byb', '_brb']
+            .reduce(function(f,c,x){
+                f.push({
+                    "type": "Feature",
+                    "geometry": {"type": "Point","coordinates": [11.5 + (x * .02), 54.3 - (y * .01)]},
+                    "properties": {
+                        "type": id,
+                        "color": c,
+                        "top": (t<0)?null: ("top_" +tid[Math.round(Math.random()*7-2)]+"_"+c.slice(-1))
+                    }
+                });
+                return f
+            },f)
+            return f;
+        },f);
+        ["can", "cone", "g3674", "super_buoy", "barrel", "float"]
+        .reduce(function(f, id,y){
+            ['','_w', '_r', '_g', '_y', '_wr', '_yb', '_by']
+            .reduce(function(f,c,x){
+                f.push({
+                    "type": "Feature",
+                    "geometry": {"type": "Point","coordinates": [11.5 + (x * .02), 54.26 - (y * .01)]},
+                    "properties": {
+                        "type": id ,
+                        "color": c,
+                        "top": (t<0)?null: ("top_" +tid[Math.round(Math.random()*7-2)]+"_"+c.slice(-1))
+                    }
+                });
+                return f
+            },f)
+            return f;
+        },f);
+
+        ["lighthouse", "lighthouse_circle"]
+        .reduce(function(f, id,y){
+            f.push({
+                "type": "Feature",
+                "geometry": {"type": "Point","coordinates": [11.66 + (y * .01), 54.26 ]},
+                "properties": {
+                    "type": "lighthouse",
+                    "icon": id
+                }
+            });
+            return f;
+        },f);
+
+        ["radio_mast","mast","land_tower","land_tower2","monument","chimney","flare_stack","dish_aerial","flagstaff","windsock","wind_turbine","land_cross","minaret","tide_gauge"]
+        .reduce(function(f, id,y){
+            f.push({
+                "type": "Feature",
+                "geometry": {"type": "Point","coordinates": [11.66 + (y * .01)-((y>6)?.07:0), 54.25-((y>6)?.01:0) ]},
+                "properties": {
+                    "icon": id,
+                }
+            });
+            return f;
+        },f);
+
+        var mapStyle = {"version":8,"name":"Dark","sprite":"sea_sprite","glyphs":"mapbox://fonts/mapbox/{fontstack}/{range}.pbf","sources":{"mapbox":{"type":"vector","url":"mapbox://mapbox.mapbox-streets-v6"},
+            "sea_demo":{"type":"geojson","data":{"type":"FeatureCollection","features":f}}} ,"layers":[
+            {"id":"background","type":"background","paint":{"background-color":"#B5D0D0"}},
+            {"id":"water","source":"mapbox","source-layer":"water","type":"fill","paint":{"fill-color":"#B5D0D0"}},
+            {"id":"boundaries","source":"mapbox","source-layer":"admin","type":"line","paint":{"line-color":"#797979","line-dasharray":[2,2,6,2]},"filter":["all",["==","maritime",0]]},
+            {"id":"ref","source":"sea_demo","type":"circle","paint":{"circle-color":"magenta","circle-radius":2}},
+            {"id":"sea_symbol_light","source":"sea_demo","type":"symbol","layout":{"icon-image":"{light}","icon-offset":[0,-33],"icon-allow-overlap":true,"icon-rotate":110}},
+            {"id":"sea_symbol_pillarpillar2_top","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top}","icon-offset":[0,-48],"icon-allow-overlap":true,"icon-rotate":18},"filter":["any",["==","type","pillar"],["==","type","pillar2"]]},
+            {"id":"sea_symbol_pillarpillar2_top2","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top2}","icon-offset":[0,-52],"icon-allow-overlap":true,"icon-rotate":18},"filter":["any",["==","type","pillar"],["==","type","pillar2"]]},
+            {"id":"sea_symbol_pillar","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[1,-18],"icon-rotate":0.1},"filter":["==","type","pillar"]},
+            {"id":"sea_symbol_pillar2","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[5,-18],"icon-rotate":0.1},"filter":["==","type","pillar2"]},
+            {"id":"sea_symbol_towerbeacon_top","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top}","icon-offset":[0,-34],"icon-allow-overlap":true,"icon-rotate":0.1},"filter":["any",["==","type","tower"],["==","type","beacon"]]},
+            {"id":"sea_symbol_towerbeacon_top2","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top2}","icon-offset":[0,-38],"icon-allow-overlap":true,"icon-rotate":0.1},"filter":["any",["==","type","tower"],["==","type","beacon"]]},
+            {"id":"sea_symbol_towerbeacon","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[0,-11],"icon-rotate":0.1},"filter":["any",["==","type","tower"],["==","type","beacon"]]},
+            {"id":"sea_symbol_cang3674cone_top","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top}","icon-offset":[0,-25],"icon-allow-overlap":true,"icon-rotate":18},"filter":["any",["==","type","can"],["==","type","g3674"],["==","type","cone"]]},
+            {"id":"sea_symbol_cang3674cone_top2","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top2}","icon-offset":[0,-29],"icon-allow-overlap":true,"icon-rotate":18},"filter":["any",["==","type","can"],["==","type","g3674"],["==","type","cone"]]},
+            {"id":"sea_symbol_cang3674","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[2,-7],"icon-rotate":0.1},"filter":["any",["==","type","can"],["==","type","g3674"]]},
+            {"id":"sea_symbol_cone","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[0,-7],"icon-rotate":0.1},"filter":["==","type","cone"]},
+            {"id":"sea_symbol_super_buoybarrelfloat_top","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top}","icon-offset":[0,-22],"icon-allow-overlap":true,"icon-rotate":0.1},"filter":["any",["==","type","super_buoy"],["==","type","barrel"],["==","type","float"]]},
+            {"id":"sea_symbol_super_buoybarrelfloat_top2","source":"sea_demo","type":"symbol","layout":{"icon-image":"{top2}","icon-offset":[0,-26],"icon-allow-overlap":true,"icon-rotate":0.1},"filter":["any",["==","type","super_buoy"],["==","type","barrel"],["==","type","float"]]},
+            {"id":"sea_symbol_super_buoy","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[0,-4],"icon-rotate":0.1},"filter":["==","type","super_buoy"]},
+            {"id":"sea_symbol_barrel","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[-1,-4],"icon-rotate":0.1},"filter":["==","type","barrel"]},
+            {"id":"sea_symbol_float","source":"sea_demo","type":"symbol","layout":{"icon-image":"{type}{color}","icon-allow-overlap":true,"icon-offset":[0,-5],"icon-rotate":0.1},"filter":["==","type","float"]},
+            {"id":"sea_symbol_lighthouse","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[0,-5],"icon-rotate":0.1},"filter":["==","type","lighthouse"]},
+            {"id":"sea_symbol_0m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[0,-26],"icon-rotate":0.1},"filter":["any",["==","icon","radio_mast"],["==","icon","mast"],["==","icon","land_tower"],["==","icon","land_tower2"],["==","icon","monument"],["==","icon","flare_stack"],["==","icon","land_cross"],["==","icon","minaret"],["==","icon","tide_gauge"]]},
+            {"id":"sea_symbol_6m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[6,-26],"icon-rotate":0.1},"filter":["==","icon","windsock"]},
+            {"id":"sea_symbol_7m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[7,-26],"icon-rotate":0.1},"filter":["==","icon","chimney"]},
+            {"id":"sea_symbol_3m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[3,-26],"icon-rotate":0.1},"filter":["any",["==","icon","dish_aerial"],["==","icon","dish_flagstaff"],["==","icon","dish_wind_turbine"]]}
+            ]};
+
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            minZoom: 4,
+            zoom: 12,
+            center: [11.621577457727739, 54.256411937817404],
+            style: mapStyle,
+            hash: false
+        });
+
+    </script>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpbG10dnA3NzY3OTZ0dmtwejN2ZnUycjYifQ.1W5oTOnWXQ9R1w8u3Oo1yA';
         var mapStyle = {
             "version": 8,
@@ -175,6 +315,7 @@
         });
 
     </script>
+    -->
 
 </body>
 </html>
