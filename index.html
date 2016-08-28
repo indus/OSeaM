@@ -47,13 +47,14 @@
         .reduce(function(f, id,y){
             ['','_w', '_r', '_g', '_y', '_wr', '_yb', '_by', '_yby', '_byb', '_brb']
             .reduce(function(f,c,x){
+                var t = Math.round(Math.random()*7-2);
                 f.push({
                     "type": "Feature",
                     "geometry": {"type": "Point","coordinates": [11.5 + (x * .02), 54.3 - (y * .01)]},
                     "properties": {
                         "type": id,
                         "color": c,
-                        "top": (t<0)?null: ("top_" +tid[Math.round(Math.random()*7-2)]+"_"+c.slice(-1))
+                        "top": (t<0)?null: ("top_" +tid[t]+"_"+c.slice(-1))
                     }
                 });
                 return f
@@ -64,13 +65,14 @@
         .reduce(function(f, id,y){
             ['','_w', '_r', '_g', '_y', '_wr', '_yb', '_by']
             .reduce(function(f,c,x){
+                var t = Math.round(Math.random()*7-2);
                 f.push({
                     "type": "Feature",
                     "geometry": {"type": "Point","coordinates": [11.5 + (x * .02), 54.26 - (y * .01)]},
                     "properties": {
                         "type": id ,
                         "color": c,
-                        "top": (t<0)?null: ("top_" +tid[Math.round(Math.random()*7-2)]+"_"+c.slice(-1))
+                        "top": (t<0)?null: ("top_" +tid[t]+"_"+c.slice(-1))
                     }
                 });
                 return f
@@ -103,7 +105,7 @@
             return f;
         },f);
 
-        var mapStyle = {"version":8,"name":"Dark","sprite":"sea_sprite","glyphs":"mapbox://fonts/mapbox/{fontstack}/{range}.pbf","sources":{"mapbox":{"type":"vector","url":"mapbox://mapbox.mapbox-streets-v6"},
+        var mapStyle = {"version":8,"name":"Dark","sprite":"sea","glyphs":"mapbox://fonts/mapbox/{fontstack}/{range}.pbf","sources":{"mapbox":{"type":"vector","url":"mapbox://mapbox.mapbox-streets-v6"},
             "sea_demo":{"type":"geojson","data":{"type":"FeatureCollection","features":f}}} ,"layers":[
             {"id":"background","type":"background","paint":{"background-color":"#B5D0D0"}},
             {"id":"water","source":"mapbox","source-layer":"water","type":"fill","paint":{"fill-color":"#B5D0D0"}},
@@ -130,7 +132,7 @@
             {"id":"sea_symbol_0m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[0,-26],"icon-rotate":0.1},"filter":["any",["==","icon","radio_mast"],["==","icon","mast"],["==","icon","land_tower"],["==","icon","land_tower2"],["==","icon","monument"],["==","icon","flare_stack"],["==","icon","land_cross"],["==","icon","minaret"],["==","icon","tide_gauge"]]},
             {"id":"sea_symbol_6m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[6,-26],"icon-rotate":0.1},"filter":["==","icon","windsock"]},
             {"id":"sea_symbol_7m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[7,-26],"icon-rotate":0.1},"filter":["==","icon","chimney"]},
-            {"id":"sea_symbol_3m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[3,-26],"icon-rotate":0.1},"filter":["any",["==","icon","dish_aerial"],["==","icon","dish_flagstaff"],["==","icon","dish_wind_turbine"]]}
+            {"id":"sea_symbol_3m26","source":"sea_demo","type":"symbol","layout":{"icon-image":"{icon}","icon-allow-overlap":true,"icon-offset":[3,-26],"icon-rotate":0.1},"filter":["any",["==","icon","dish_aerial"],["==","icon","flagstaff"],["==","icon","wind_turbine"]]}
             ]};
 
 
